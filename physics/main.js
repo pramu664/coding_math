@@ -3,24 +3,21 @@ window.onload = function() {
 	ct = canvas.getContext("2d"),
 	width = canvas.width = window.innerWidth,
 	height = canvas.height = window.innerHeight,
-	position = vector.create(width/2, height/2),
-	velocity = vector.create(0, 0);
 
-	var angleInRadians = Math.PI/180 * 30;
+	p = particle.create(100, 100, 3, Math.PI / 6);
 
-	velocity.setMagnitude(3);
-	velocity.setAngle(angleInRadians);
 
 	update();
 
 	function update() {
 		ct.clearRect(0, 0, width, height);
 
+		p.update();
+
 		ct.beginPath();
-		ct.arc(position.getX(), position.getY(), 10, 0, Math.PI * 2, false);
+		ct.arc(p.position.getX(), p.position.getY(), 10, 0, Math.PI * 2, false);
 		ct.fill();
 
-		position.addTo(velocity);
 
 		requestAnimationFrame(update);
 	}
