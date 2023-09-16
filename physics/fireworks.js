@@ -5,20 +5,18 @@ window.onload = function() {
 	const height = canvas.height = window.innerHeight;
 	const centerX = width / 2;
 	const centerY = height / 2;
-
 	const particles = [];
 
 	for (let i = 0; i < 1000; i++) {
-		let newParticle = particle.create(centerX, centerY, Math.random() * 3, Math.random() * (Math.PI * 2));
+		let newParticle = particle.create(centerX, centerY, Math.random() * 5, Math.random() * (Math.PI * 2), 0.1);
 		particles.push(newParticle);
 	}
 
-	update();
+	//update();
 
 	function update() {
 
 		ct.clearRect(0, 0, width, height);
-		ct.fillStyle = "green";
 
 		for(let i = 0; i < particles.length; i++) {
 			let p = particles[i];
