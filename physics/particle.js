@@ -13,5 +13,9 @@ var particle = {
 
 	update: function() {
 		this.position.addTo(this.velocity);
+	},
+
+	accelerate: function(acceleration) {
+		this.velocity.addTo(acceleration);
 	}
 };

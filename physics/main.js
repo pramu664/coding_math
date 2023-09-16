@@ -6,14 +6,16 @@ window.onload = function() {
 	cx = width/2;
 	cy = height/2;
 
-	p = particle.create(cx, cy, 1.5, Math.PI/4);
+	p = particle.create(0, height, 10, 3 * Math.PI/2);
+	acceleration = vector.create(0.1, 0.1);
 
 
-	update();
+	//update();
 
 	function update() {
 		ct.clearRect(0, 0, width, height);
 
+		p.accelerate(acceleration);
 		p.update();
 
 		ct.beginPath();
