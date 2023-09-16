@@ -3,8 +3,10 @@ window.onload = function() {
 	ct = canvas.getContext("2d"),
 	width = canvas.width = window.innerWidth,
 	height = canvas.height = window.innerHeight,
+	cx = width/2;
+	cy = height/2;
 
-	p = particle.create(100, 100, 3, Math.PI / 6);
+	p = particle.create(cx, cy, 1.5, Math.PI/4);
 
 
 	update();
