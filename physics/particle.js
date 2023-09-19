@@ -7,8 +7,10 @@ var particle = {
 		var obj = Object.create(this);
 		obj.position = vector.create(x, y);
 		obj.velocity = vector.create(0, 0);
+
 		obj.velocity.setMagnitude(speed);
 		obj.velocity.setAngle(direction);
+
 		obj.gravity = vector.create(0, grav || 0);
 		return obj;
 	},
