@@ -4,25 +4,26 @@ window.onload = function () {
 	const width = canvas.width = window.innerWidth;
 	const height = canvas.height = window.innerHeight;
 
-	const p = particle.create(width/2, height/2, 3, Math.PI / 6);
-	const p2 = particle.create(width/2, height/2, 3, -(Math.PI / 6));
+
+	// Create hundred particles
+	const particles = [];
+	for (let i = 0; i < 100; i++) {
+		particles.push(particle.create(width/2, height/2, Math.random() * 5, Math.random() * Math.PI * 2));
+	}
 
 	update();
-
 
 	function update() {
 
 		ct.clearRect(0, 0, width, height);
-		ct.arc(p.position.getX(), p.position.getY(), 10, 0, Math.PI * 2, false);
-		ct.fill();
 
-
-		ct.beginPath();
-		ct.arc(p2.position.getX(), p2.position.getY(), 10, 0, Math.PI * 2, false);
-		ct.fill();
-
-		p.update();
-		p2.update();
+		// Draw particles 
+		for (let i = 0; i < particles.length; i++) {
+			ct.beginPath();
+			ct.arc(particles[i].position.getX(), particles[i].position.getY(), 10, 0, Math.PI * 2, false);
+			ct.fill();
+			particles[i].update();
+		}
 
 		requestAnimationFrame(update);
 	}
