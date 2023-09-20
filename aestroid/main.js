@@ -60,9 +60,18 @@ window.onload = function () {
 
 		// Draw the ship
 		ct.clearRect(0, 0, width, height);
+
+		ct.save();
+		ct.translate(ship.position.getX(), ship.position.getY());
+
 		ct.beginPath();
-		ct.arc(ship.position.getX(), ship.position.getY(), 5, 0, Math.PI * 2, false);
-		ct.fill()
+		ct.moveTo(0, 0);
+		ct.lineTo(0, 20);
+		ct.lineTo(30, 10);
+		ct.lineTo(0, 0);
+		ct.fill();
+
+		ct.restore();
 
 		// Apply velocity and acceleration to the ship
 		ship.update();
