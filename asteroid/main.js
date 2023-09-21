@@ -12,7 +12,7 @@ window.onload = function () {
 	const thrust = vector.create(0, 0);
 	let angle = 0;
 
-	// State and state mangement
+	// States and state mangement
 	let turningLeft = false;
 	let turningRight = false;
 	let thrusting = false;
@@ -72,10 +72,10 @@ window.onload = function () {
 			angle -= 0.05;
 		}
 
-		// Set the angle of the thrust
+		// Set the angle for the thrust vector
 		thrust.setAngle(angle);
 
-		// Set the magnitude of the thrust
+		// Set the magnitude for thrust vector
 		if (thrusting) {
 			thrust.setMagnitude(0.1);
 		} else {
@@ -111,7 +111,6 @@ window.onload = function () {
 		ct.restore();
 
 
-		// Wrap the ship around window
 		if (ship.position.getX() > width) {
 			ship.position.setX(0);
 		} else if (ship.position.getX() < 0) {
