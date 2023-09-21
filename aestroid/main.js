@@ -1,83 +1,117 @@
 window.onload = function () {
+	
+	// Context set up
 	const canvas = document.getElementById("canvas");
 	const ct = canvas.getContext("2d");
 	const width = canvas.width = window.innerWidth;
 	const height = canvas.height = window.innerHeight;
 
-	// Define the ship and thrust
+
+	// Ship setup 
 	const ship = particle.create(width/2, height/2, 0, 0);
 	const thrust = vector.create(0, 0);
+	let angle = 0;
 
-	// what happens when the user presses down a key
-	// When user presses and keep pressing we apply thrust to the ship
+	// State and state mangement
+	let turningLeft = false;
+	let turningRight = false;
+	let thrusting = false;
 	document.body.addEventListener("keydown", function(event) {
-
-		console.log(event.key);
 
 		switch(event.key) {
 				case "ArrowLeft":
-					thrust.setX(-0.1); // left
+					turningLeft = true;
 					break;
-				case "ArrowUp":
-					thrust.setY(-0.1); // up
-					break;
+
 				case "ArrowRight":
-					thrust.setX(0.1); // right
+					turningRight = true;
 					break;
-				case "ArrowDown":
-					thrust.setY(0.1); //down
+
+				case "ArrowUp":
+					thrusting = true;
 					break;
+
 				default:
 					break;
 		}
 	});
 
-	// what happens when the user releases from key
-	// when user releases the key we no longer apply thrust to the ship
 	document.body.addEventListener("keyup", function(event) {
 
 		switch(event.key) {
-			case "ArrowLeft":
-				thrust.setX(0); // left
-				break;
+
 			case "ArrowUp":
-				thrust.setY(0); // up
+				thrusting = false;
 				break;
+
+			case "ArrowLeft":
+				turningLeft = false;
+				break;
+
 			case "ArrowRight":
-				thrust.setX(0); // right
+				turningRight = false;
 				break;
-			case "ArrowDown":
-				thrust.setY(0); // down
+
 			default:
 				break;
 		}
 
 	});
 	
+
+	// Calls every frame
 	update();
-
 	function update() {
-
-		// Draw the ship
 		ct.clearRect(0, 0, width, height);
 
-		ct.save();
-		ct.translate(ship.position.getX(), ship.position.getY());
+		// Set the angle for the ship
+		if (turningRight) {
+			angle += 0.05;
+		}
+		if (turningLeft) {
+			angle -= 0.05;
+		}
 
-		ct.beginPath();
-		ct.moveTo(0, 0);
-		ct.lineTo(0, 20);
-		ct.lineTo(30, 10);
-		ct.lineTo(0, 0);
-		ct.fill();
+		// Set the angle of the thrust
+		thrust.setAngle(angle);
 
-		ct.restore();
+		// Set the magnitude of the thrust
+		if (thrusting) {
+			thrust.setMagnitude(0.1);
+		} else {
+			thrust.setMagnitude(0);
+		}
 
-		// Apply velocity and acceleration to the ship
-		ship.update();
+		// Apply thrust
 		ship.accelerate(thrust);
 
-		// What happens when the ship move out from the window
+		// Apply velocity  
+		ship.update();
+
+
+		// Translate and rotate the coordinate system
+		ct.save();
+		ct.translate(ship.position.getX(), ship.position.getY());
+		ct.rotate(angle);
+
+		// Render the ship
+		ct.beginPath();
+		ct.moveTo(10, 0);
+		ct.lineTo(-10, -7);
+		ct.lineTo(-10, 7);
+		ct.lineTo(10, 0);
+		if (thrusting) {
+			ct.moveTo(-10, 0);
+			ct.lineTo(-18, 0);
+		}
+		ct.stroke();
+
+
+		// Restore the coordinate system
+		ct.restore();
+
+
+		// Wrap the ship around window
 		if (ship.position.getX() > width) {
 			ship.position.setX(0);
 		} else if (ship.position.getX() < 0) {
@@ -90,6 +124,5 @@ window.onload = function () {
 
 		requestAnimationFrame(update);
 	}
-
 };
 
