@@ -2,7 +2,7 @@ var particle = {
 	position: null,
 	velocity: null,
 	gravity: null,
-	mass: 1,
+	mass: 1, // new
 	radius: 0,
 
 	create: function(x, y, speed, direction, radius, grav) {
@@ -19,25 +19,25 @@ var particle = {
 		return obj;
 	},
 
-	angleTo: function(p2) {
+	angleTo: function(p2) { // new
 		return Math.atan2(p2.position.getY() - this.position.getY(), p2.position.getX() - this.position.getX());
 	},
 
-	distanceTo: function(p2) {
-		const x = p2.position.getY() - this.position.getY();
-		const y = p2.position.getX() - this.position.getX();
-		return Math.sqrt(x * x + y * y);
+	distanceTo: function(p2) { // new
+		let dx = p2.position.getX() - this.position.getX(),
+		dy = p2.position.getY() - this.position.getY();
+
+		return Math.sqrt(dx * dx + dy * dy);
 	},
 
-	gravitateTo: function(p2) {
-		const gravity = vector.create(0, 0);
-		const magnitude = p2.mass / this.distanceTo(p2) * this.distanceTo(p2);
-		const angle = this.angleTo(p2);
+	gravitateTo: function(p2) { // new
+		let grav = vector.create(0, 0);
+		let dist = this.distanceTo(p2);
 
-		gravity.setMagnitude(magnitude);
-		gravity.setAngle(angle);
+		grav.setMagnitude(p2.mass/ (dist * dist));
+		grav.setAngle(this.angleTo(p2));
 
-		this.velocity.addTo(gravity);
+		this.velocity.addTo(grav);
 	},
 
 	update: function() {
