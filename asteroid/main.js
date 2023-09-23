@@ -36,6 +36,7 @@ window.onload = function () {
 		}
 	});
 
+
 	document.body.addEventListener("keyup", function(event) {
 
 		switch(event.key) {

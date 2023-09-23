@@ -12,7 +12,7 @@ window.onload = function() {
 		particles.push(newParticle);
 	}
 
-	//update();
+	update();
 
 	function update() {
 
